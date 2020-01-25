@@ -303,13 +303,14 @@ void QskMaterialSkin::initPushButtonHints()
 
     const ColorPalette& pal = m_data->palette;
 
-    setMetric( Q::Panel | MinimumWidth, qskDpiScaled( 75.0 ) );
-    setMetric( Q::Panel | MinimumHeight, qskDpiScaled( 23.0 ) );
+    setMetric( Q::Panel | MinimumWidth, qskDpiScaled( 64.0 ) );
+    setMetric( Q::Panel | MinimumHeight, qskDpiScaled( 36.0 ) );
+    setMetric( Q::Panel | MaximumHeight, qskDpiScaled( 36.0 ) );
 
     setMetric( Q::Panel | Spacing, 4 );
 
     const QskMargins margin( 4, 3 );
-    const QskMargins padding( 10, 6 );
+    const QskMargins padding( 16, 0 ); // ### vertical padding?
 
     setMargins( Q::Panel | Margin, margin );
     setMargins( Q::Panel | Padding, padding );

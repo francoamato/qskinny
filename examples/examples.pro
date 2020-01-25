@@ -5,6 +5,7 @@ SUBDIRS += \
     desktop \
     layouts \
     listbox \
+    material \
     messagebox \
     mycontrols \
     sliders \
