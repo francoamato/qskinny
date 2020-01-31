@@ -27,25 +27,7 @@ class QSK_MATERIAL_EXPORT QskMaterialSkin : public QskSkin
 
     void initCommonHints();
 
-    void initBoxHints();
-    void initDialogButtonBoxHints();
-    void initDialogButtonHints();
-    void initFocusIndicatorHints();
-    void initInputPanelHints();
-    void initVirtualKeyboardHints();
-    void initListViewHints();
-    void initPageIndicatorHints();
-    void initPopupHints();
     void initPushButtonHints();
-    void initScrollViewHints();
-    void initSeparatorHints();
-    void initSubWindowHints();
-    void initSliderHints();
-    void initTabButtonHints();
-    void initTabBarHints();
-    void initTabViewHints();
-    void initTextInputHints();
-    void initTextLabelHints();
 
     class PrivateData;
     std::unique_ptr< PrivateData > m_data;
