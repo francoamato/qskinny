@@ -107,10 +107,14 @@ void QskMaterialSkin::initPushButtonHints()
     setColor( Q::Text | Q::Flat, m_data->palette.baseColor );
     setFontRole( Q::Text, MediumFont );
     setSkinHint( Q::Text | Alignment, Qt::AlignCenter );
-    setBoxShape( QskPushButton::Panel, 4 );
+    setBoxShape( Q::Panel, 4 );
 
     // for outlined buttons:
-    setBoxBorderColors(QskPushButton::Panel | Q::Flat, { m_data->palette.baseColor } );
+    setBoxBorderColors(Q::Panel | Q::Flat, { m_data->palette.baseColor } );
+
+    setMetric( Q::Graphic | MinimumHeight, 18 );
+    setMetric( Q::Graphic | MaximumHeight, 18 );
+    setMetric( Q::Graphic | Position, 18 );
 }
 
 #include "moc_QskMaterialSkin.cpp"
