@@ -98,7 +98,8 @@ void QskMaterialSkin::initPushButtonHints()
 
     const QskMargins padding( 16, 0 ); // ### vertical padding? ### Depends on icon
 
-    setMargins( Q::Panel | Padding, padding );
+    setMargins( Q::Panel | Padding, padding ); // ### remove, use text and graphics margins instead
+    setMargins( Q::Text | Padding, 16 );
 
     setGradient( Q::Panel, { "#6200EE" } );
     setGradient( Q::Panel | Q::Flat, Qt::white );
@@ -112,9 +113,10 @@ void QskMaterialSkin::initPushButtonHints()
     // for outlined buttons:
     setBoxBorderColors(Q::Panel | Q::Flat, { m_data->palette.baseColor } );
 
-    setMetric( Q::Graphic | MinimumHeight, 18 );
-    setMetric( Q::Graphic | MaximumHeight, 18 );
-    setMetric( Q::Graphic | Position, 18 );
+    // graphics for buttons:
+    setSkinHint( Q::Graphic | Alignment, Qt::AlignLeft );
+    setMetric( QskPushButton::Panel | QskAspect::Spacing, 8 );
+//    setMargins( Q::Graphic | Padding | Left, 12 );
 }
 
 #include "moc_QskMaterialSkin.cpp"

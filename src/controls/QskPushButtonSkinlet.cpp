@@ -76,13 +76,28 @@ QRectF QskPushButtonSkinlet::textRect(
     QRectF r = button->innerBox( QskPushButton::Panel,
         subControlRect( button, contentsRect, QskPushButton::Panel ) );
 
+    const auto originalRect = r;
+
     if ( button->hasGraphic() )
     {
-        // in case of having text + graphic we put the text at the bottom
+        const auto alignment = button->flagHint< Qt::Alignment >(
+            QskPushButton::Graphic | QskAspect::Alignment, Qt::AlignTop );
 
-        qreal h = QFontMetricsF( button->effectiveFont( QskPushButton::Text ) ).height();
-        if ( h < r.height() )
-            r.setTop( r.bottom() - h );
+        switch( alignment ) {
+            case Qt::AlignLeft: {
+                const auto graphicsRect = subControlRect( button, contentsRect, QskPushButton::Graphic );
+                const auto spacing = button->metric( QskPushButton::Panel | QskAspect::Spacing );
+                r.setX( r.x() + graphicsRect.width() + spacing );
+                r.setWidth( originalRect.width() - graphicsRect.width() );
+                break;
+                // ### font metrics stuff
+            }
+            default: { // Top
+                qreal h = QFontMetricsF( button->effectiveFont( QskPushButton::Text ) ).height();
+                if ( h < r.height() )
+                    r.setTop( r.bottom() - h );
+            }
+        }
     }
 
     return r;
@@ -96,20 +111,33 @@ QRectF QskPushButtonSkinlet::graphicRect(
     QRectF r = button->innerBox( QskPushButton::Panel,
         subControlRect( button, contentsRect, QskPushButton::Panel ) );
 
-    if ( !button->text().isEmpty() )
-    {
-        const auto textRect = subControlRect( button, contentsRect, QskPushButton::Text );
+    const auto alignment = button->flagHint< Qt::Alignment >(
+        QskPushButton::Graphic | QskAspect::Alignment, Qt::AlignTop );
 
-        qreal h = textRect.height() +
-            button->metric( QskPushButton::Panel | QskAspect::Spacing );
+    switch( alignment ) {
+        case Qt::AlignLeft:
+        {
+            break;
+        }
+        default:
+        {
+            if ( !button->text().isEmpty() )
+            {
+                const auto textRect = subControlRect( button, contentsRect, QskPushButton::Text );
 
-        if ( h < r.height() )
-            r.setBottom( r.bottom() - h );
-        else
-            r.setHeight( 0 );
+                qreal h = textRect.height() +
+                    button->metric( QskPushButton::Panel | QskAspect::Spacing );
+
+                if ( h < r.height() )
+                    r.setBottom( r.bottom() - h );
+                else
+                    r.setHeight( 0 );
+            }
+        }
     }
 
     const auto maxSize = button->graphicSourceSize();
+
     if ( maxSize.width() >= 0 || maxSize.height() >= 0 )
     {
         // limiting the size by graphicSize
@@ -118,7 +146,11 @@ QRectF QskPushButtonSkinlet::graphicRect(
 
         if ( maxW >= 0.0 && maxW < r.width() )
         {
-            r.setX( r.center().x() - 0.5 * maxW );
+            if( alignment != Qt::AlignLeft )
+            {
+                r.setX( r.center().x() - 0.5 * maxW );
+            }
+
             r.setWidth( maxW );
         }
 
@@ -143,8 +175,17 @@ QRectF QskPushButtonSkinlet::graphicRect(
 
         const int w = qFloor( scaleFactor * sz.width() );
         const int h = qFloor( scaleFactor * sz.height() );
-        const int x = qFloor( r.center().x() - 0.5 * w );
-        const int y = qFloor( r.center().y() - 0.5 * h );
+        int x, y;
+
+        if ( alignment == Qt::AlignLeft )
+        {
+            x = r.x();
+        }
+        else
+        {
+            x = qFloor( r.center().x() - 0.5 * w );
+        }
+        y = qFloor( r.center().y() - 0.5 * h );
 
         r = QRectF( x, y, w, h );
     }
