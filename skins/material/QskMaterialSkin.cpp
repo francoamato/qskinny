@@ -7,6 +7,7 @@
 
 #include <QskBoxBorderColors.h>
 #include <QskBoxBorderMetrics.h>
+#include <QskColorFilter.h>
 #include <QskFunctions.h>
 #include <QskMargins.h>
 #include <QskPushButton.h>
@@ -117,6 +118,12 @@ void QskMaterialSkin::initPushButtonHints()
     setSkinHint( Q::Graphic | Alignment, Qt::AlignLeft );
     setMetric( QskPushButton::Panel | QskAspect::Spacing, 8 );
 //    setMargins( Q::Graphic | Padding | Left, 12 );
+
+    setGraphicRole( Q::Graphic, GraphicRoleContained );
+    QskColorFilter containedFilter;
+    const auto tc = m_data->palette.textColor;
+    containedFilter.addColorSubstitution( Qt::black, qRgb( tc.red(), tc.green(), tc.blue() ) );
+    setGraphicFilter( GraphicRoleContained, containedFilter );
 }
 
 #include "moc_QskMaterialSkin.cpp"
