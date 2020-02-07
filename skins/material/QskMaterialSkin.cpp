@@ -124,6 +124,12 @@ void QskMaterialSkin::initPushButtonHints()
     const auto tc = m_data->palette.textColor;
     containedFilter.addColorSubstitution( Qt::black, qRgb( tc.red(), tc.green(), tc.blue() ) );
     setGraphicFilter( GraphicRoleContained, containedFilter );
+
+    setGraphicRole( Q::Graphic | Q::Flat, GraphicRoleOutlined );
+    const auto bc = m_data->palette.baseColor;
+    QskColorFilter outlinedFilter;
+    outlinedFilter.addColorSubstitution( Qt::black, qRgb( bc.red(), bc.green(), bc.blue() ) );
+    setGraphicFilter( GraphicRoleOutlined, outlinedFilter );
 }
 
 #include "moc_QskMaterialSkin.cpp"
