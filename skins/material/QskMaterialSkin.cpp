@@ -97,6 +97,7 @@ void QskMaterialSkin::initPushButtonHints()
     setMetric( Q::Panel | MinimumHeight, qskDpiScaled( 36.0 ) );
     setMetric( Q::Panel | MaximumHeight, qskDpiScaled( 36.0 ) );
 
+
     const QskMargins padding( 16, 0 ); // ### vertical padding?
 
     setMargins( Q::Panel | Padding, padding ); // ### remove, use text and graphics margins instead

@@ -259,6 +259,19 @@ QSizeF QskPushButton::contentsSizeHint( Qt::SizeHint which, const QSizeF& ) cons
 
     const QFontMetricsF fm( font() );
 
+    const auto graphicsAlignment = flagHint< Qt::Alignment >(
+        QskPushButton::Graphic | QskAspect::Alignment, Qt::AlignTop );
+
+    switch( graphicsAlignment ) {
+        case Qt::AlignLeft:
+        {
+            const auto graphicsWidth = graphicSourceSize().width();
+            const auto spacing = metric( QskPushButton::Panel | QskAspect::Spacing );
+            size.setWidth( graphicsWidth + spacing + size.width() );
+            break;
+        }
+    }
+
     if ( !m_data->text.isEmpty() )
     {
         // in elide mode we might want to ignore the text width ???
